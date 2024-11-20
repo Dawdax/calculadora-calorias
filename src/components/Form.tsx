@@ -34,7 +34,10 @@ export default function Form({ dispatch, state }: FormProps) {
       | React.ChangeEvent<HTMLInputElement>
   ) => {
     const isNumberField = ["category", "calories"].includes(e.target.id);
-
+    // Validar solo números para campos numéricos
+    if (isNumberField && !/^\d*$/.test(e.target.value)) {
+      return;
+    }
     setActivity({
       ...activity,
       [e.target.id]: isNumberField ? +e.target.value : e.target.value,
@@ -101,7 +104,7 @@ export default function Form({ dispatch, state }: FormProps) {
             value={activity.calories}
             onChange={handleChange}
             id="calories"
-            type="number"
+            type="text"
             className="border border-slate-300 p-2 rounded-lg"
             placeholder="Ejemplo: 200"
           />
